@@ -20,22 +20,11 @@ public class GitHubClient {
 
     private static final Logger LOG = LoggerFactory.getLogger(GitHubClient.class);
 
-    private OkHttpClient okHttpClient;
     private ApolloClient client;
 
     public GitHubClient(String url, String token) {
-        okHttpClient = new OkHttpClient.Builder()
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(chain -> chain.proceed(chain.request().newBuilder().addHeader("Authorization", "Bearer " + token).build()))
-                .build();
-
-        client = ApolloClient.builder()
-                .serverUrl(url)
-                .okHttpClient(okHttpClient)
-                .build();
-    }
-
-    public GitHubClient(String url) {
-        okHttpClient = new OkHttpClient.Builder()
                 .build();
 
         client = ApolloClient.builder()
