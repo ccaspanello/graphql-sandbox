@@ -1,0 +1,26 @@
+query Blame($repoName:String!, $repoOwner:String!, $ref:String!, $path:String! $blob:String!){
+  repository(owner: $repoOwner, name: $repoName) {
+    commit: object(expression: $ref) {
+      ... on Commit {
+        blame(path: $path) {
+          ranges {
+            startingLine
+            endingLine
+            age
+            commit {
+              oid
+              author {
+                name
+              }
+            }
+          }
+        }
+      }
+    }
+    content:object(expression: $blob) {
+      ... on Blob {
+        text
+      }
+    }
+  }
+}

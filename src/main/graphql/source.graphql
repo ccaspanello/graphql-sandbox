@@ -1,0 +1,9 @@
+query Source($repoName:String!, $repoOwner:String!, $blob:String!){
+  repository(owner: $repoOwner, name: $repoName) {
+    content:object(expression: $blob) {
+      ... on Blob {
+        text
+      }
+    }
+  }
+}
